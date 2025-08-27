@@ -1,4 +1,4 @@
-package co.com.owerup2025;
+package co.com.powerup2025;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

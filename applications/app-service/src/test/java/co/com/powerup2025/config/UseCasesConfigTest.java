@@ -1,4 +1,4 @@
-package co.com.owerup2025.config;
+package co.com.powerup2025.config;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
