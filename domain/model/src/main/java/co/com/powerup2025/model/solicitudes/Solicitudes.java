@@ -30,5 +30,5 @@ public class Solicitudes {
 
         private Long idEstado;
 
-        private Long idTipoPrestamo;
+        private Integer idTipoPrestamo;
 }

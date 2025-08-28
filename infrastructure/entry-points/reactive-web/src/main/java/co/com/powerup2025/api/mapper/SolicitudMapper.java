@@ -29,8 +29,8 @@ public interface SolicitudMapper {
 
     // --- Entity → Response DTO ---
     @Mapping(target = "solicitudId", source = "codigoSolicitud")
-    @Mapping(target = "estado", expression = "java(co.com.powerup2025.model.enums.EstadoSolicitud.getEstado(solicitudes.getIdEstado()))")
-    @Mapping(target = "mensaje", constant = "java(co.com.powerup2025.model.enums.EstadoSolicitud.getMessage(solicitudes.getIdEstado()))")//
+    @Mapping(target = "estado", expression = "java(co.com.powerup2025.model.solicitudes.enums.EstadoSolicitud.getEstado(solicitudes.getIdEstado()))")
+    @Mapping(target = "mensaje", constant = "java(co.com.powerup2025.model.solicitudes.enums.EstadoSolicitud.getMessage(solicitudes.getIdEstado()))")//
     SolicitudResponseDTO toDto(Solicitudes solicitudes);
 
 

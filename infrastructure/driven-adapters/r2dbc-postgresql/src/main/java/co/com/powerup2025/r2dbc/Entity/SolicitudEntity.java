@@ -41,5 +41,5 @@ public class SolicitudEntity {
     private Long idEstado;
 
     @Column("id_tipo_prestamo")
-    private Long idTipoPrestamo;
+    private Integer idTipoPrestamo;
 }

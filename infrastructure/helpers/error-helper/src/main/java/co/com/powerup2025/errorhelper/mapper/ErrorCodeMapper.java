@@ -11,6 +11,7 @@ public class ErrorCodeMapper {
 
         return switch (prefix) {
             case "VAL" -> HttpStatus.BAD_REQUEST;
+            case "SOL" -> HttpStatus.NOT_ACCEPTABLE;
             case "USR" -> HttpStatus.NOT_FOUND;
             case "AUT" -> HttpStatus.UNAUTHORIZED;
             case "FOR" -> HttpStatus.FORBIDDEN;

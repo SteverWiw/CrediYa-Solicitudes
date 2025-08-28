@@ -1,5 +1,6 @@
 package co.com.powerup2025.api;
 
+import co.com.powerup2025.api.handler.SolicitudHandler;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -28,3 +28,5 @@ include ':logger'
 project(':logger').projectDir = file('./infrastructure/driven-adapters/logger')
 include ':error-helper'
 project(':error-helper').projectDir = file('./infrastructure/helpers/error-helper')
+include ':rest-consumer'
+project(':rest-consumer').projectDir = file('./infrastructure/driven-adapters/rest-consumer')

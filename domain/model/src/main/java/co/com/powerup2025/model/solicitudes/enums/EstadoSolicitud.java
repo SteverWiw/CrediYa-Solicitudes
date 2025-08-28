@@ -1,8 +1,8 @@
-package co.com.powerup2025.model.enums;
+package co.com.powerup2025.model.solicitudes.enums;
 
 public enum EstadoSolicitud {
 
-    PENDIENTE(1L, "Pendiente de revisión","La solicitud ha sido registrada pero aún no procesada"),
+    PENDIENTE(1L, "Pendiente","La solicitud sera revisada por un analista en unos momentos"),
     APROBADA(2L, "Aprobada","La solicitud ha sido aprobada y está en proceso de desembolso"),
     RECHAZADA(3L, "Rechazada","La solicitud fue evaluada y no cumple con los requisitos"),
     REVISION(4L,"En revisión","La solicitud está siendo revisada por un analista");

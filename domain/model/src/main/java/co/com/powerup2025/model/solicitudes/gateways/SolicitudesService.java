@@ -1,5 +1,8 @@
 package co.com.powerup2025.model.solicitudes.gateways;
 
-public interface SolicitudesService {
+import co.com.powerup2025.model.solicitudes.Solicitudes;
+import reactor.core.publisher.Mono;
 
+public interface SolicitudesService {
+    Mono <Solicitudes> createLoan(Solicitudes solicitudes);
 }

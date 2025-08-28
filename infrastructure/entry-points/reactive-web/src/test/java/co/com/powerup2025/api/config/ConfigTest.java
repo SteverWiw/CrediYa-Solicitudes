@@ -1,6 +1,6 @@
 package co.com.powerup2025.api.config;
 
-import co.com.powerup2025.api.SolicitudHandler;
+import co.com.powerup2025.api.handler.SolicitudHandler;
 import co.com.powerup2025.api.SolicitudRouterRest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
