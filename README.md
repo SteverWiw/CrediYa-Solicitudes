@@ -1,47 +1,60 @@
-# Proyecto Base Implementando Clean Architecture
+Proyecto/
+â”œâ”€â”€ application/         â† Main App
+â”œâ”€â”€ domain/
+â”‚   â”œâ”€â”€ model/           â† Entidades y objetos de valor
+â”‚   â””â”€â”€ usecase/         â† LÃ³gica de negocio pura
+â”œâ”€â”€ infrastructure/      
+â”‚   â”œâ”€â”€ entrypoints/     â† Routers y handlers
+â”‚   â””â”€â”€ driven-adapters/ â† Adaptadores de BD y loggers
+â”‚   â””â”€â”€ helpers/         â† Utilidades y helper de excepciones
 
-## Antes de Iniciar
+TecnologÃ­as
 
-Empezaremos por explicar los diferentes componentes del proyectos y partiremos de los componentes externos, continuando con los componentes core de negocio (dominio) y por último el inicio y configuración de la aplicación.
+Java 17+
+Spring Boot 3
+Spring WebFlux (reactivo)
+Spring Data R2DBC
+PostgreSQL
+Lombok
+SLF4J + Logback
+Springdoc OpenAPI / Swagger
+JUnit / Reactor Test
 
-Lee el artículo [Clean Architecture — Aislando los detalles](https://medium.com/bancolombia-tech/clean-architecture-aislando-los-detalles-4f9530f35d7a)
+ConfiguraciÃ³n
 
-# Arquitectura
+Configura la base de datos PostgreSQL y las credenciales en application.yml:
 
-![Clean Architecture](https://miro.medium.com/max/1400/1*ZdlHz8B0-qu9Y-QO3AXR_w.png)
+adapters:
+r2dbc:
+host: localhost
+port: 5432
+database: tu_bd
+schema: tu_schema
+username: tu_username
+password: tu_password
 
-## Domain
 
-Es el módulo más interno de la arquitectura, pertenece a la capa del dominio y encapsula la lógica y reglas del negocio mediante modelos y entidades del dominio.
+Variables opcionales:
 
-## Usecases
+logging:
+level:
+root: INFO
 
-Este módulo gradle perteneciente a la capa del dominio, implementa los casos de uso del sistema, define lógica de aplicación y reacciona a las invocaciones desde el módulo de entry points, orquestando los flujos hacia el módulo de entities.
+Endpoints
+MÃ©todo	Ruta	                    DescripciÃ³n	            Request	            Response
+POST	/crediYa/api/v1/usuarios	Crear un nuevo usuario	UsuarioRequestDTO	UsuarioResponseDTO o ErrorResponse
 
-## Infrastructure
 
-### Helpers
+Swagger UI disponible en: http://localhost:8080/swagger-ui/index.html
+OpenAPI JSON en: http://localhost:8080/v3/api-docs
 
-En el apartado de helpers tendremos utilidades generales para los Driven Adapters y Entry Points.
 
-Estas utilidades no están arraigadas a objetos concretos, se realiza el uso de generics para modelar comportamientos
-genéricos de los diferentes objetos de persistencia que puedan existir, este tipo de implementaciones se realizan
-basadas en el patrón de diseño [Unit of Work y Repository](https://medium.com/@krzychukosobudzki/repository-design-pattern-bc490b256006)
 
-Estas clases no puede existir solas y debe heredarse su compartimiento en los **Driven Adapters**
 
-### Driven Adapters
+EjecuciÃ³n
+./gradlew bootRun
 
-Los driven adapter representan implementaciones externas a nuestro sistema, como lo son conexiones a servicios rest,
-soap, bases de datos, lectura de archivos planos, y en concreto cualquier origen y fuente de datos con la que debamos
-interactuar.
 
-### Entry Points
+Para construir:
 
-Los entry points representan los puntos de entrada de la aplicación o el inicio de los flujos de negocio.
-
-## Application
-
-Este módulo es el más externo de la arquitectura, es el encargado de ensamblar los distintos módulos, resolver las dependencias y crear los beans de los casos de use (UseCases) de forma automática, inyectando en éstos instancias concretas de las dependencias declaradas. Además inicia la aplicación (es el único módulo del proyecto donde encontraremos la función “public static void main(String[] args)”.
-
-**Los beans de los casos de uso se disponibilizan automaticamente gracias a un '@ComponentScan' ubicado en esta capa.**
+./gradlew clean build

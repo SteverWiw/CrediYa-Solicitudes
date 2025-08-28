@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-@ContextConfiguration(classes = {RouterRest.class, Handler.class})
+@ContextConfiguration(classes = { SolicitudRouterRest.class, SolicitudHandler.class })
 @WebFluxTest
 class RouterRestTest {
 
@@ -24,9 +24,8 @@ class RouterRestTest {
                 .expectStatus().isOk()
                 .expectBody(String.class)
                 .value(userResponse -> {
-                            Assertions.assertThat(userResponse).isEmpty();
-                        }
-                );
+                    Assertions.assertThat(userResponse).isEmpty();
+                });
     }
 
     @Test
@@ -38,9 +37,8 @@ class RouterRestTest {
                 .expectStatus().isOk()
                 .expectBody(String.class)
                 .value(userResponse -> {
-                            Assertions.assertThat(userResponse).isEmpty();
-                        }
-                );
+                    Assertions.assertThat(userResponse).isEmpty();
+                });
     }
 
     @Test
@@ -53,8 +51,7 @@ class RouterRestTest {
                 .expectStatus().isOk()
                 .expectBody(String.class)
                 .value(userResponse -> {
-                            Assertions.assertThat(userResponse).isEmpty();
-                        }
-                );
+                    Assertions.assertThat(userResponse).isEmpty();
+                });
     }
 }
