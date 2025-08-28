@@ -1,0 +1,81 @@
+openapi: 3.0.1
+info:
+  title: CrediYa API
+  description: Documentación de APIs (WebFlux + Clean Architecture)
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /crediYa/api/v1/usuarios:
+    get:
+      tags:
+        - Usuarios
+      summary: Obtener usuario
+      description: Obtiene usuario por email
+      operationId: getUser
+      parameters:
+        - name: email
+          in: query
+          description: Email del usuario a buscar
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Usuario encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioResponseDTO'
+        '400':
+          description: Error en la validación del email
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    UsuarioResponseDTO:
+      type: object
+      description: Usuario Response DTO
+      properties:
+        idUsuario:
+          type: integer
+          format: int32
+        nombre:
+          type: string
+        apellido:
+          type: string
+        email:
+          type: string
+        documentoIdentidad:
+          type: integer
+          format: int64
+        telefono:
+          type: string
+        idRol:
+          type: integer
+          format: int32
+        salarioBase:
+          type: number
+    ErrorResponse:
+      type: object
+      description: Estructura de la respuesta de error
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        module:
+          type: string
+        severity:
+          type: string
+        traceId:
+          type: string
