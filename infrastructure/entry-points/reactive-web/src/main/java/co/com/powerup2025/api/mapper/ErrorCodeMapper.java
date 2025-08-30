@@ -1,4 +1,4 @@
-package co.com.powerup2025.errorhelper.mapper;
+package co.com.powerup2025.api.mapper;
 
 
 import co.com.powerup2025.model.exception.gateways.iErrorCode;
@@ -11,7 +11,6 @@ public class ErrorCodeMapper {
 
         return switch (prefix) {
             case "VAL" -> HttpStatus.BAD_REQUEST;
-            case "SOL" -> HttpStatus.NOT_ACCEPTABLE;
             case "USR" -> HttpStatus.NOT_FOUND;
             case "AUT" -> HttpStatus.UNAUTHORIZED;
             case "FOR" -> HttpStatus.FORBIDDEN;

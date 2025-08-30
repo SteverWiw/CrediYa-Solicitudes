@@ -12,6 +12,9 @@ spring:
   profiles:
     include: null
 management:
+  tracing:
+    sampling:
+      probability: 1.0 # 100% de requests esto ers requerido para activar el tracing entre micros
   endpoints:
     web:
       exposure:
@@ -38,6 +41,12 @@ springdoc:
     path: "/swagger-ui.html"
     operationsSorter: "method"
     tagsSorter: "alpha"
+logging:
+  pattern:
+    level: "%5p [traceId=%X{traceId}, spanId=%X{spanId}]"
+  # evita que Spring agregue el suyo
+  pattern.console: "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %clr(%5p) [traceId=%X{traceId}, spanId=%X{spanId}] %logger{36} : %msg%n" 
+   
 adapter:
   restconsumer:
     timeout: 5000

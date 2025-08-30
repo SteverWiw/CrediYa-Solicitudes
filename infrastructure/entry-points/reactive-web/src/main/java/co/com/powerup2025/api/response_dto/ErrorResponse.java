@@ -1,4 +1,4 @@
-package co.com.powerup2025.errorhelper.dto;
+package co.com.powerup2025.api.response_dto;
 
 import co.com.powerup2025.model.exception.gateways.iErrorCode;
 import io.swagger.v3.oas.annotations.media.Schema;

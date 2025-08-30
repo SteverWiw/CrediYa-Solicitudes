@@ -2,12 +2,11 @@ package co.com.powerup2025.consumer.api;
 
 import co.com.powerup2025.consumer.api.model.UsuarioResponseDTO;
 
-import co.com.powerup2025.errorhelper.Exception.IntegrationException;
-import co.com.powerup2025.errorhelper.dto.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -35,7 +34,7 @@ public class UsuariosApi {
                         status -> status.is4xxClientError() || status.is5xxServerError(),
                         resp -> resp.bodyToFlux(ErrorResponse.class)
                                 .collectList()
-                                .flatMap(list -> Mono.error(new IntegrationException(list)))
+                                .flatMap(list -> Mono.error(new RuntimeException(/*list*/)))
                 )
                 .bodyToMono(UsuarioResponseDTO.class);
     }
