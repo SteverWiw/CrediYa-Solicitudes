@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "SolicitudRequestDTO", description = "Solicitud Request DTO", requiredProperties = { "monto",
                 "plazo", "email", "idTipoPrestamo" })
 public record SolicitudRequestDTO(
-                @Schema(description = "Monto del préstamo", example = "500000", minimum = "30000000", maximum = "500000000", required = true) BigDecimal monto,
+                @Schema(description = "Monto del préstamo", example = "500000", minimum = "300000", maximum = "500000000", required = true) BigDecimal monto,
 
                 @Schema(description = "Plazo en meses para pagar el préstamo", example = "12", minimum = "6", maximum = "60", required = true) Integer plazo,
 

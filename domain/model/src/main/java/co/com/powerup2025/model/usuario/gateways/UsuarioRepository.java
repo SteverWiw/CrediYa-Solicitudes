@@ -5,5 +5,5 @@ import reactor.core.publisher.Mono;
 
 public interface UsuarioRepository {
 
-    public Mono<Usuario> getUserByEmail(String email);
+     Mono<Usuario> getUserByEmail(String email);
 }
