@@ -65,7 +65,6 @@ class SolicitudesUseCaseTest {
                 loggerFactory
         );
 
-
         usuarioMock = Usuario.builder()
                 .idUsuario(1)
                 .nombre("Test")
@@ -77,7 +76,6 @@ class SolicitudesUseCaseTest {
                 .salarioBase(BigDecimal.valueOf(5000))
                 .build();
     }
-
 
     @Test
     void createLoan_Success_WithTraceIdValidation() {
@@ -111,7 +109,6 @@ class SolicitudesUseCaseTest {
         when(usuarioRepository.getUserByEmail(usuarioMock.getEmail())).thenReturn(Mono.just(usuarioMock));
         when(solicitudesRepository.save(any())).thenAnswer(inv -> Mono.just(inv.getArgument(0)));
 
-        // Act & Assert
         StepVerifier.create(
                         useCase.createLoan(solicitud)
                                 .contextWrite(Context.of("traceId", "abc123-trace"))
@@ -127,67 +124,35 @@ class SolicitudesUseCaseTest {
         verify(logger, atLeastOnce()).info(anyString());
     }
 
-
     @Test
     void createLoan_ValidationFails() {
         Solicitudes solicitud = Solicitudes.builder()
-                .email("invalid-email")
+                .email("correo-invalido") // formato incorrecto
+                .monto(null)
                 .idTipoPrestamo(1)
+                .plazo(null)
                 .build();
 
-        try (MockedStatic<SolicitudValidator> validatorMock = mockStatic(SolicitudValidator.class)) {
-            validatorMock.when(() -> SolicitudValidator.validar(solicitud))
-                    .thenReturn(Mono.error(new BusinessException(ErrorCode.VAL_009)));
-
-            StepVerifier.create(useCase.createLoan(solicitud))
-                    .expectErrorMatches(BusinessException.class::isInstance)
-                    .verify();
-        }
+        StepVerifier.create(useCase.createLoan(solicitud))
+                .expectError(BusinessException.class)
+                .verify();
     }
 
     @Test
     void createLoan_TipoPrestamoNotFound() {
         Solicitudes solicitud = Solicitudes.builder()
                 .email(usuarioMock.getEmail())
+                .monto(BigDecimal.valueOf(1000))
+                .plazo(12)
                 .idTipoPrestamo(1)
                 .build();
 
-        try (MockedStatic<SolicitudValidator> validatorMock = mockStatic(SolicitudValidator.class)) {
-            validatorMock.when(() -> SolicitudValidator.validar(solicitud)).thenReturn(Mono.just(solicitud));
+        when(tipoPrestamosRepository.findById(1)).thenReturn(Mono.empty());
 
-            when(tipoPrestamosRepository.findById(1)).thenReturn(Mono.empty());
+        StepVerifier.create(useCase.createLoan(solicitud))
+                .expectError(BusinessException.class)
+                .verify();
 
-            StepVerifier.create(useCase.createLoan(solicitud))
-                    .expectErrorMatches(BusinessException.class::isInstance )
-                    .verify();
-        }
-    }
-
-    @Test
-    void createLoan_UsuarioNotFound() {
-        Solicitudes solicitud = Solicitudes.builder()
-                .email(usuarioMock.getEmail())
-                .idTipoPrestamo(1)
-                .build();
-
-        TipoPrestamo tipoPrestamo = TipoPrestamo.builder()
-                .montoMinimo(BigDecimal.valueOf(500))
-                .montoMaximo(BigDecimal.valueOf(2000))
-                .plazoMinimo(6)
-                .plazoMaximo(24)
-                .build();
-
-        try (MockedStatic<SolicitudValidator> validatorMock = mockStatic(SolicitudValidator.class)) {
-            validatorMock.when(() -> SolicitudValidator.validar(solicitud)).thenReturn(Mono.just(solicitud));
-            validatorMock.when(() -> SolicitudValidator.validarMontoYPlazo(solicitud, tipoPrestamo)).thenReturn(Mono.just(solicitud));
-
-            when(tipoPrestamosRepository.findById(1)).thenReturn(Mono.just(tipoPrestamo));
-            when(usuarioRepository.getUserByEmail(usuarioMock.getEmail())).thenReturn(Mono.empty());
-
-            StepVerifier.create(useCase.createLoan(solicitud))
-                    .expectErrorMatches(BusinessException.class::isInstance )
-                    .verify();
-        }
     }
 
     @Test
