@@ -37,9 +37,9 @@ subprojects {
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
-        annotationProcessor  "org.projectlombok:lombok:${lombokVersion}"
-        testCompileOnly  "org.projectlombok:lombok:${lombokVersion}"
-        testAnnotationProcessor  "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+        testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
         implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
     }
 
@@ -51,7 +51,10 @@ subprojects {
         }
     }
 
-    test.finalizedBy(project.tasks.jacocoTestReport)
+    if (project.name == "domain") {
+        test.finalizedBy jacocoTestReport
+    }
+
 
     pitest {
         targetClasses = ['co.com.powerup2025.*']
@@ -88,18 +91,32 @@ jacoco {
     reportsDirectory.set(layout.buildDirectory.dir("reports"))
 }
 
-tasks.register('jacocoMergedReport', JacocoReport) {
-    dependsOn = [test, subprojects.jacocoTestReport, pitestReportAggregate]
-    additionalSourceDirs.setFrom files(subprojects.sourceSets.main.allSource.srcDirs)
-    sourceDirectories.setFrom files(subprojects.sourceSets.main.allSource.srcDirs)
-    classDirectories.setFrom files(subprojects.sourceSets.main.output)
-    executionData.setFrom project.fileTree(dir: '.', include: '**/build/jacoco/test.exec')
+tasks.register('jacocoDomainReport', JacocoReport) {
+    dependsOn = [':usecase:test']
+
+    additionalSourceDirs.setFrom files(
+            project(':usecase').sourceSets.main.allSource.srcDirs
+    )
+    sourceDirectories.setFrom files(
+            project(':usecase').sourceSets.main.allSource.srcDirs
+    )
+    classDirectories.setFrom files(
+            project(':usecase').sourceSets.main.output
+    )
+
+    executionData.setFrom fileTree(dir: '.', include: [
+            'domain/model/build/jacoco/test.exec',
+            'domain/usecase/build/jacoco/test.exec'
+    ])
+
     reports {
-        xml.setRequired true
-        csv.setRequired false
-        html.setRequired true
+        xml.required = true
+        xml.outputLocation = layout.buildDirectory.file("reports/jacocoDomain/jacocoDomain.xml")
+        html.required = true
+        html.outputLocation = layout.buildDirectory.dir("reports/jacocoDomain/html")
     }
 }
+
 
 tasks.withType(JavaCompile).configureEach {
     options.compilerArgs = [

@@ -29,7 +29,7 @@ public class SolicitudesUseCase implements SolicitudesService {
         this.usuarioRepository = usuarioRepository;
         this.tipoPrestamosRepository = tipoPrestamosRepository;
         this.solicitudesRepository = solicitudesRepository;
-        this.logger = logger.getLogger(SolicitudesService.class);
+        this.logger = logger.getLogger(SolicitudesUseCase.class);
     }
 
     @Override
