@@ -2,8 +2,6 @@ package co.com.powerup2025.usecase.loan;
 
 import co.com.powerup2025.model.exception.enums.ErrorCode;
 import co.com.powerup2025.model.exception.exceptions.BusinessException;
-import co.com.powerup2025.model.exception.gateways.LoggerFactoryPort;
-import co.com.powerup2025.model.exception.gateways.LoggerPort;
 import co.com.powerup2025.model.loans.Loan;
 import co.com.powerup2025.model.loans.enums.LoanState;
 import co.com.powerup2025.model.loans.gateways.LoanRepository;

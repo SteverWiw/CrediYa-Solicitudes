@@ -62,7 +62,7 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         return http.authorizeExchange(exchanges -> exchanges
-                        .pathMatchers(HttpMethod.POST, "/crediYa/api/v1/auth/**").permitAll()
+                        .pathMatchers(HttpMethod.POST, "/crediYa/api/v1/solicitud/**").permitAll()
                         .pathMatchers(HttpMethod.OPTIONS).permitAll()
                         .anyExchange().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2

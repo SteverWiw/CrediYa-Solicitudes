@@ -1,11 +1,11 @@
 package co.com.powerup2025.logger;
 
-import co.com.powerup2025.model.exception.gateways.LoggerPort;
+import co.com.powerup2025.model.logger.LoggerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
 
-public class LoggerRepositoryAdapter implements LoggerPort {
+public class LoggerRepositoryAdapter implements LoggerRepository {
     private final Logger logger;
 
     public LoggerRepositoryAdapter(Class<?> clazz) {

@@ -2,8 +2,6 @@ package co.com.powerup2025.api.handler;
 
 import co.com.powerup2025.api.mapper.LoanMapper;
 import co.com.powerup2025.api.dtos.request.LoanRequest;
-import co.com.powerup2025.model.exception.gateways.LoggerFactoryPort;
-import co.com.powerup2025.model.exception.gateways.LoggerPort;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;

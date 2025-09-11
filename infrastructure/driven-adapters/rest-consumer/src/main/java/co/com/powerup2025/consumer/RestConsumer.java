@@ -1,7 +1,5 @@
 package co.com.powerup2025.consumer;
 
-import co.com.powerup2025.model.exception.gateways.LoggerFactoryPort;
-import co.com.powerup2025.model.exception.gateways.LoggerPort;
 import org.springframework.stereotype.Service;
 
 import co.com.powerup2025.consumer.api.UserApi;
@@ -33,6 +31,8 @@ public class RestConsumer implements UserRepository {
     }
 
     public Mono<User> getUserByEmailFallback(String email, Throwable ex) {
+        logger.error(String.format("Fallback activado para getUserByEmail. Email: %s, Error: %s", email, ex.getMessage()), ex);
+
         return Mono.error(new Throwable("Error obteniendo user por email: " + ex.getMessage()));
     }
 

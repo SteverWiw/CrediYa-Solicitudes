@@ -26,7 +26,7 @@ public class UserApi {
     */
     public Mono<UserResponseDTO> getUserRequest(String email) {
         return client.method(HttpMethod.GET)
-                .uri("/crediYa/api/v1/usuarios?email={email}", email)
+                .uri("/crediYa/api/v1/usuarios/getByEmail?email={email}", email)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .onStatus(

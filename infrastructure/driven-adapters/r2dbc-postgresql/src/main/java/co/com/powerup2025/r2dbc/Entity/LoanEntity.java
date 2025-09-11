@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table("solicitud")
+@Table(name="solicitud",schema = "loan")
 public class LoanEntity {
 
     @Id

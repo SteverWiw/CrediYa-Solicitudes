@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table("tipo_prestamo")
+@Table(name="tipo_prestamo",schema = "loan")
 public class LoanTypeEntity {
 
     @Id

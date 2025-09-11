@@ -37,16 +37,21 @@ adapters:
     username: dev_user
     password: dev123
 springdoc:
+  api-docs:
+    path: /v3/api-docs
+    format: yaml
   swagger-ui:
-    path: "/swagger-ui.html"
-    operationsSorter: "method"
-    tagsSorter: "alpha"
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
 logging:
   pattern:
     level: "%5p [traceId=%X{traceId}, spanId=%X{spanId}]"
   # evita que Spring agregue el suyo
-  pattern.console: "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %clr(%5p) [traceId=%X{traceId}, spanId=%X{spanId}] %logger{36} : %msg%n" 
-   
+  pattern.console: "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %clr(%5p) [traceId=%X{traceId}, spanId=%X{spanId}] %logger{36} : %msg%n"
+  level:
+    org.springdoc: DEBUG
+
 adapter:
   restconsumer:
     timeout: 5000
@@ -68,4 +73,5 @@ resilience4j:
           - java.io.IOException
         ignore-exceptions:
           - co.com.powerup2025.model.exception.exceptions.BusinessException
+
 
