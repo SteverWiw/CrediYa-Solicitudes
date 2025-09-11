@@ -32,10 +32,10 @@ adapters:
   r2dbc:
     host: "localhost"
     port: 5432
-    database: "prestamos_db"
-    schema: "prestamos"
-    username: "dev_user"
-    password: "dev123"
+    database: crediya
+    schema: loan
+    username: dev_user
+    password: dev123
 springdoc:
   swagger-ui:
     path: "/swagger-ui.html"

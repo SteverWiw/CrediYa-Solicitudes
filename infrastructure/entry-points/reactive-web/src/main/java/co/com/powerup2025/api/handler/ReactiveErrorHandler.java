@@ -1,7 +1,7 @@
 package co.com.powerup2025.api.handler;
 
 import co.com.powerup2025.api.mapper.ErrorCodeMapper;
-import co.com.powerup2025.api.response_dto.ErrorResponse;
+import co.com.powerup2025.api.dtos.response.ErrorResponse;
 import co.com.powerup2025.model.exception.enums.ErrorCode;
 import co.com.powerup2025.model.exception.exceptions.BusinessException;
 import co.com.powerup2025.model.exception.gateways.LoggerFactoryPort;

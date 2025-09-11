@@ -3,13 +3,35 @@ dependencies {
     implementation project(':model')
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    //security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+
+    //trazabilidad
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation "org.springdoc:springdoc-openapi-starter-webflux-ui:2.5.0"
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    // OpenAPI swagger
+    implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.6.14'
+
+    //MapStruct
     implementation "org.mapstruct:mapstruct:1.6.0"
     annotationProcessor "org.mapstruct:mapstruct-processor:1.6.0"
 
+    //Tracing- Logger
     implementation 'io.micrometer:micrometer-tracing-bridge-brave'
     implementation 'io.micrometer:context-propagation:1.1.3'
     implementation 'org.springframework.boot:spring-boot-starter-logging'
+
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
+    //validator
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+
 
 }

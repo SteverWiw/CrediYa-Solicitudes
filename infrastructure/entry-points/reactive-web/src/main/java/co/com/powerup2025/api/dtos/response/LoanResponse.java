@@ -1,4 +1,4 @@
-package co.com.powerup2025.api.response_dto;
+package co.com.powerup2025.api.dtos.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(name = "SolicitudResponseDTO", description = "Respuesta de la creación de la solicitud")
-public class SolicitudResponseDTO {
+public class LoanResponse {
 
         @Schema(description = "Identificador único de la solicitud", example = "2025-00000001")
         private String solicitudId;
