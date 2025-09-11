@@ -1,12 +1,12 @@
 package co.com.powerup2025.api.mapper;
 
 
-import co.com.powerup2025.model.exception.gateways.iErrorCode;
+import co.com.powerup2025.model.exception.gateways.IErrorCode;
 import org.springframework.http.HttpStatus;
 
 public class ErrorCodeMapper {
 
-    public static HttpStatus mapToHttpStatus(iErrorCode errorCode) {
+    public static HttpStatus mapToHttpStatus(IErrorCode errorCode) {
         String prefix = errorCode.code().substring(0, 3);
 
         return switch (prefix) {

@@ -2,7 +2,7 @@ package co.com.powerup2025.api;
 
 import co.com.powerup2025.api.dtos.request.LoanRequest;
 import co.com.powerup2025.api.dtos.response.LoanResponse;
-import co.com.powerup2025.api.handler.SolicitudHandler;
+import co.com.powerup2025.api.handler.LoanHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,13 +25,13 @@ public class LoanRouterRest {
 
     @RouterOperations(value = {
 
-            @RouterOperation(path = "/crediYa/api/v1/solicitud", method = RequestMethod.POST, beanClass = SolicitudHandler.class, beanMethod = "crearteLoan", operation = @Operation(operationId = "crearteLoan", tags = {
+            @RouterOperation(path = "/crediYa/api/v1/solicitud", method = RequestMethod.POST, beanClass = LoanHandler.class, beanMethod = "crearteLoan", operation = @Operation(operationId = "crearteLoan", tags = {
                     "Solicitud"}, summary = "Crear una nueva solicitud", description = "Crea una nueva solicitud en el sistema", requestBody = @RequestBody(required = true, description = "Datos de la solicitud a crear", content = @Content(mediaType = "application/json", schema = @Schema(implementation = LoanRequest.class))), responses = {
                     @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = LoanResponse.class))),
                     @ApiResponse(responseCode = "400", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
             }))
     })
-    public RouterFunction<ServerResponse> routerFunction(SolicitudHandler handler) {
+    public RouterFunction<ServerResponse> routerFunction(LoanHandler handler) {
         return RouterFunctions
                 .nest(RequestPredicates.path("/crediYa"),
                         RouterFunctions

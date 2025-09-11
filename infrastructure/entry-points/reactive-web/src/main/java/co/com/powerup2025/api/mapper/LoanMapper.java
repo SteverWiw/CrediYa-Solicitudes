@@ -2,7 +2,7 @@ package co.com.powerup2025.api.mapper;
 
 import co.com.powerup2025.api.dtos.request.LoanRequest;
 import co.com.powerup2025.api.dtos.response.LoanResponse;
-import co.com.powerup2025.model.solicitudes.Solicitudes;
+import co.com.powerup2025.model.loans.Loan;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -22,16 +22,16 @@ public interface LoanMapper {
     @Mapping(target = "fechaCreacion",ignore = true)
     @Mapping(target = "codigoSolicitud",ignore = true)
     @Mapping(target = "idEstado",ignore = true)//
-    Solicitudes toEntity(LoanRequest dto);
+    Loan toEntity(LoanRequest dto);
 
 
 
 
     // --- Entity → Response DTO ---
     @Mapping(target = "solicitudId", source = "codigoSolicitud")
-    @Mapping(target = "estado", expression = "java(co.com.powerup2025.model.solicitudes.enums.EstadoSolicitud.getEstado(solicitudes.getIdEstado()))")
-    @Mapping(target = "mensaje", expression = "java(co.com.powerup2025.model.solicitudes.enums.EstadoSolicitud.getMessage(solicitudes.getIdEstado()))")//
-    LoanResponse toDto(Solicitudes solicitudes);
+    @Mapping(target = "estado", expression = "java(co.com.powerup2025.model.loans.enums.LoanState.getEstado(loan.getIdEstado()))")
+    @Mapping(target = "mensaje", expression = "java(co.com.powerup2025.model.loans.enums.LoanState.getMessage(loan.getIdEstado()))")//
+    LoanResponse toDto(Loan loan);
 
     default String mapCodigoSolicitud(String codigo) {
         return codigo != null ? codigo : "";

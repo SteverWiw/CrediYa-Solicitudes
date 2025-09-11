@@ -6,7 +6,7 @@ import co.com.powerup2025.model.exception.enums.ErrorCode;
 import co.com.powerup2025.model.exception.exceptions.BusinessException;
 import co.com.powerup2025.model.exception.gateways.LoggerFactoryPort;
 import co.com.powerup2025.model.exception.gateways.LoggerPort;
-import co.com.powerup2025.model.exception.gateways.iErrorCode;
+import co.com.powerup2025.model.exception.gateways.IErrorCode;
 import io.micrometer.tracing.Span;
 import io.micrometer.tracing.Tracer;
 import org.springframework.http.HttpStatus;
@@ -31,7 +31,7 @@ public class ReactiveErrorHandler {
             Span currentSpan = tracer.currentSpan();
             String traceId = currentSpan.context().traceId();
 
-            List<iErrorCode> errores = (ex instanceof BusinessException be)
+            List<IErrorCode> errores = (ex instanceof BusinessException be)
                     ? be.getErrorCodes()
                     : List.of(ErrorCode.SYS_001);
 

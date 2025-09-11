@@ -1,8 +1,8 @@
 package co.com.powerup2025.model.exception.enums;
 
-import co.com.powerup2025.model.exception.gateways.iErrorCode;
+import co.com.powerup2025.model.exception.gateways.IErrorCode;
 
-public enum ErrorCode implements iErrorCode {
+public enum ErrorCode implements IErrorCode {
 
     USR_001("El usuario no fue encontrado", Severity.HIGH, ErrorModule.SOLICITUDES),
     // USR_002("El email ya esta en uso", Severity.HIGH, ErrorModule.SOLICITUDES),
