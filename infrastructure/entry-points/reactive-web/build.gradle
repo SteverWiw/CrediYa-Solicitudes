@@ -3,6 +3,8 @@ dependencies {
     implementation project(':model')
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.data:spring-data-commons:3.2.2'
+
 
     //security
     implementation 'org.springframework.boot:spring-boot-starter-security'

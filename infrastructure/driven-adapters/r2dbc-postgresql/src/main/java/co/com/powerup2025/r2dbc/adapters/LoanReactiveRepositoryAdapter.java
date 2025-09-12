@@ -9,6 +9,7 @@ import org.springframework.transaction.reactive.TransactionalOperator;
 
 import co.com.powerup2025.r2dbc.Entity.LoanEntity;
 import co.com.powerup2025.r2dbc.helper.ReactiveAdapterOperations;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
@@ -34,5 +35,14 @@ public class LoanReactiveRepositoryAdapter
                                                                                                         // modelo
                 .as(txOperator::transactional);
     }
+
+    @Override
+    public Flux<Loan> obtenerPorEstado(String estado) {
+        return estado.isBlank()
+                ? repository.findAll().map(entity -> mapper.mapBuilder(entity, Loan.LoanBuilder.class).build())
+                : repository.findAllByIdEstado(estado)
+                .map(entity -> mapper.mapBuilder(entity, Loan.LoanBuilder.class).build());
+    }
+
 
 }

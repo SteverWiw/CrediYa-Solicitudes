@@ -1,5 +1,7 @@
 package co.com.powerup2025.consumer;
 
+import co.com.powerup2025.model.logger.LoggerFactoryPort;
+import co.com.powerup2025.model.logger.LoggerRepository;
 import org.springframework.stereotype.Service;
 
 import co.com.powerup2025.consumer.api.UserApi;
@@ -13,7 +15,7 @@ import reactor.core.publisher.Mono;
 public class RestConsumer implements UserRepository {
     private final UserApi userApi;
     private final UserMapper mapper;
-    private final LoggerPort logger;
+    private final LoggerRepository logger;
 
     public RestConsumer(UserApi userApi, UserMapper mapper, LoggerFactoryPort loggerFactoryPort) {
         this.userApi = userApi;

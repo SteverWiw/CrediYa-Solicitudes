@@ -2,9 +2,11 @@ package co.com.powerup2025.api.mapper;
 
 import co.com.powerup2025.api.dtos.request.LoanRequest;
 import co.com.powerup2025.api.dtos.response.LoanResponse;
+import co.com.powerup2025.api.dtos.response.PageableResponse;
 import co.com.powerup2025.model.loans.Loan;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.data.domain.Page;
 
 import static org.mapstruct.factory.Mappers.getMapper;
 

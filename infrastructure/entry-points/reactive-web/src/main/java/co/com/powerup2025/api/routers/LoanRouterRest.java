@@ -30,12 +30,15 @@ public class LoanRouterRest {
                     @ApiResponse(responseCode = "400", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
             }))
     })
+
+
     public RouterFunction<ServerResponse> routerFunction(LoanHandler handler) {
         return RouterFunctions
                 .nest(RequestPredicates.path("/crediYa/api/v1/solicitud"),
                         RouterFunctions
                                 .route()
                                 .POST("/crear", handler::crearteLoan)
+                                .GET("/listByState", handler::listarPorEstado)
                                 .build());
     }
 }

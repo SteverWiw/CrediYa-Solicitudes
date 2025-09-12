@@ -23,6 +23,7 @@ public enum ErrorCode implements IErrorCode {
     VAL_011("El monto es obligatorio", Severity.MEDIUM, ErrorModule.VALIDACION),
     VAL_012("El plazo es obligatorio", Severity.MEDIUM, ErrorModule.VALIDACION),
     VAL_013("El tipo de préstamo no existe", Severity.MEDIUM, ErrorModule.VALIDACION),
+    VAL_014("Solo puede crear una solicitud a si mismo", Severity.MEDIUM, ErrorModule.VALIDACION),
 
     // SOLICITUDES
     SOL_001("El tipo de préstamo no existe", Severity.MEDIUM, ErrorModule.SOLICITUDES),
