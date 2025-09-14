@@ -1,24 +1,22 @@
 package co.com.powerup2025.usecase.loan;
 
-import co.com.powerup2025.model.IJWTUtil;
+import java.time.LocalDate;
+import java.util.concurrent.ThreadLocalRandom;
+
 import co.com.powerup2025.model.exception.enums.ErrorCode;
 import co.com.powerup2025.model.exception.exceptions.BusinessException;
+import co.com.powerup2025.model.jwt.TokenReaderPort;
 import co.com.powerup2025.model.loans.Loan;
 import co.com.powerup2025.model.loans.enums.LoanState;
-import co.com.powerup2025.model.loans.gateways.LoanRepository;
 import co.com.powerup2025.model.loans.gateways.ILoanUseCase;
+import co.com.powerup2025.model.loans.gateways.LoanRepository;
 import co.com.powerup2025.model.loantype.gateways.LoanTypeRepository;
 import co.com.powerup2025.model.logger.LoggerFactoryPort;
 import co.com.powerup2025.model.logger.LoggerRepository;
 import co.com.powerup2025.model.user.gateways.UserRepository;
 import co.com.powerup2025.usecase.loan.validations.LoanValidator;
-
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import javax.print.MultiDocPrintService;
-import java.time.LocalDate;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 public class LoanUseCase implements ILoanUseCase {
@@ -27,15 +25,15 @@ public class LoanUseCase implements ILoanUseCase {
     private final LoanTypeRepository loanTypeRepository;
     private final LoanRepository loanRepository;
     private final LoggerRepository logger;
-    private final IJWTUtil  jwtUtil;
+    private final TokenReaderPort tokenReaderPort;
 
 
-    public LoanUseCase(UserRepository usuarioRepository, LoanTypeRepository loanTypeRepository, LoanRepository loanRepository, LoggerFactoryPort logger, IJWTUtil jwtUtil) {
+    public LoanUseCase(UserRepository usuarioRepository, LoanTypeRepository loanTypeRepository, LoanRepository loanRepository, LoggerFactoryPort logger, TokenReaderPort tokenReaderPort) {
         this.usuarioRepository = usuarioRepository;
         this.loanTypeRepository = loanTypeRepository;
         this.loanRepository = loanRepository;
         this.logger = logger.getLogger(LoanUseCase.class);
-        this.jwtUtil = jwtUtil;
+        this.tokenReaderPort = tokenReaderPort;
     }
 
     @Override
@@ -44,16 +42,16 @@ public class LoanUseCase implements ILoanUseCase {
         return LoanValidator.validar(loan)
                 .flatMap(s -> logger.info("Validando datos de solicitud").thenReturn(s))
                 .flatMap(validated ->
-                            loanTypeRepository.findById(validated.getIdTipoPrestamo())
+                        loanTypeRepository.findById(validated.getIdTipoPrestamo())
                                 .switchIfEmpty(Mono.error(new BusinessException(ErrorCode.VAL_013)))
                                 .flatMap(tipoPrestamo ->
                                         LoanValidator.validarMontoYPlazo(loan, tipoPrestamo)
                                                 .flatMap(sl -> logger.info("Validando datos de prestamo").thenReturn(sl))
                                                 .flatMap(s ->
                                                         usuarioRepository.getUserByEmail(loan.getEmail())
-                                                                .flatMap(user -> user.getEmail().equals(jwtUtil.getUsername(token))?
-                                                                         Mono.just(user)
-                                                                        :Mono.error(new BusinessException(ErrorCode.VAL_014))        )
+                                                                .flatMap(user -> user.getEmail().equals(tokenReaderPort.getUsername(token)) ?
+                                                                        Mono.just(user)
+                                                                        : Mono.error(new BusinessException(ErrorCode.VAL_014)))
                                                                 .switchIfEmpty(Mono.error(new BusinessException(ErrorCode.USR_001)))
                                                                 .flatMap(usuario -> {
                                                                             String codigoSolicitud = generarCodigoSolicitud();

@@ -1,10 +1,13 @@
 package co.com.powerup2025.api.handler;
 
+import java.util.List;
+
+import co.com.powerup2025.api.dtos.request.LoanRequest;
 import co.com.powerup2025.api.dtos.response.LoanResponse;
 import co.com.powerup2025.api.dtos.response.PageableResponse;
 import co.com.powerup2025.api.mapper.LoanMapper;
-import co.com.powerup2025.api.dtos.request.LoanRequest;
 import co.com.powerup2025.model.loans.Loan;
+import co.com.powerup2025.model.loans.gateways.ILoanUseCase;
 import co.com.powerup2025.model.logger.LoggerFactoryPort;
 import co.com.powerup2025.model.logger.LoggerRepository;
 import org.springframework.http.HttpHeaders;
@@ -13,12 +16,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
-
-import co.com.powerup2025.model.loans.gateways.ILoanUseCase;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
 
 @Component
 public class LoanHandler {
@@ -79,13 +78,17 @@ public class LoanHandler {
                     Flux<Loan> flujo = ILoanUseCase.listarSolicitudes(estado);
                     Mono<Long> total = flujo.count();
 
-                    Mono<List<LoanResponse>> contenido = flujo
-                            .skip((long) pagina * tamaño)
+                    long offset = ((long) pagina - 1) * tamaño;
+                    offset = Math.max(offset, 0);
+
+
+                    Mono<List<LoanResponse>> content = flujo
+                            .skip(offset)
                             .take(tamaño)
                             .map(mapper::toDto)
                             .collectList();
 
-                    return Mono.zip(contenido, total)
+                    return Mono.zip(content, total)
                             .map(tuple -> new PageableResponse<>(
                                     tuple.getT1(),
                                     pagina,

@@ -1,14 +1,11 @@
 server:
-  port: 8081
+  port: 8082
+
 spring:
   application:
     name: "CrediYa"
   devtools:
     add-properties: false
-  h2:
-    console:
-      enabled: true
-      path: "/h2"
   profiles:
     include: null
 management:
@@ -26,16 +23,24 @@ management:
   health:
     circuitbreakers:
       enabled: true
+
+security:
+  jwt:
+    secret: ${JWT_SECRET:H8PVV7h2qr3AnAhpJ5vRCEHDbGP1Vm5R}
+    issuer: ${JWT_ISSUER:crediya-auth}
+
 cors:
   allowed-origins: "http://localhost:4200,http://localhost:8080"
+
 adapters:
   r2dbc:
-    host: "localhost"
-    port: 5432
-    database: crediya
-    schema: loan
-    username: dev_user
-    password: dev123
+    host: ${DB_HOST:localhost}
+    port: ${DB_PORT:5432}
+    database: ${DB_NAME:crediya}
+    schema: ${DB_SCHEMA:loan}
+    username: ${DB_USER:dev_user}
+    password: ${DB_PASSWORD:dev123}
+
 springdoc:
   api-docs:
     path: /v3/api-docs
@@ -44,18 +49,19 @@ springdoc:
     path: /swagger-ui.html
     operationsSorter: method
     tagsSorter: alpha
+
 logging:
   pattern:
     level: "%5p [traceId=%X{traceId}, spanId=%X{spanId}]"
-  # evita que Spring agregue el suyo
-  pattern.console: "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %clr(%5p) [traceId=%X{traceId}, spanId=%X{spanId}] %logger{36} : %msg%n"
+    console: "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %clr(%5p) [traceId=%X{traceId}, spanId=%X{spanId}] %logger{36} : %msg%n"
   level:
     org.springdoc: DEBUG
 
 adapter:
   restconsumer:
     timeout: 5000
-    url: "http://localhost:8080"
+    url: ${API_AUTH:http://localhost:8080}
+
 resilience4j:
   circuitbreaker:
     instances:
@@ -73,5 +79,3 @@ resilience4j:
           - java.io.IOException
         ignore-exceptions:
           - co.com.powerup2025.model.exception.exceptions.BusinessException
-
-

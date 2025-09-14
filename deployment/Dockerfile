@@ -1,7 +1,24 @@
-FROM eclipse-temurin:21-jdk-alpine
-VOLUME /tmp
-COPY *.jar CrediYa.jar
-ENV JAVA_OPTS=" -Xshareclasses:name=cacheapp,cacheDir=/cache,nonfatal -XX:+UseContainerSupport -XX:MaxRAMPercentage=70 -Djava.security.egd=file:/dev/./urandom"
-# Replace with a non-root user to avoid running the container with excessive privileges
-USER appuser
-ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS  -jar CrediYa.jar" ]
+# Build
+FROM gradle:8.11-jdk17-alpine AS builder
+WORKDIR /app
+
+COPY . .
+
+# Compilar el servicio app-service
+RUN gradle :app-service:bootJar --no-daemon -x validateStructure
+
+# Runtime
+FROM gcr.io/distroless/java17-debian12:nonroot
+WORKDIR /app
+
+# Copiamos el jar generado en app-service
+COPY --from=builder /app/applications/app-service/build/libs/*.jar app.jar
+
+# Puerto
+EXPOSE 8081
+
+# Nombre del servicio
+ENV SPRING_APPLICATION_NAME=loan-service
+
+# Ejecutamos
+ENTRYPOINT ["java", "-jar", "app.jar"]

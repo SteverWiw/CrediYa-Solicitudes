@@ -1,0 +1,17 @@
+{
+    "java.project.sourcePaths": [
+        "infrastructure/entry-points/reactive-web/src/main/java/co/com/powerup2025/api",
+        "infrastructure/entry-points/reactive-web",
+        "infrastructure/entry-points",
+        "infrastructure/driven-adapters/rest-consumer",
+        "infrastructure/driven-adapters/r2dbc-postgresql",
+        "infrastructure/driven-adapters/logger",
+        "infrastructure/driven-adapters",
+        "domain/usecase",
+        "domain/model",
+        "domain",
+        "applications/app-service",
+        "applications",
+        "infrastructure"
+    ]
+}
